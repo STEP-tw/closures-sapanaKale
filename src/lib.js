@@ -30,22 +30,25 @@ const makeDeltaTracker = function (delta1) {
 }
 
 const makeFiboGenerator = function (arg1, arg2) {
-  let firstTerm = 0;
-  let secondTerm = 1;
+  let lastTerm = 1;
+  let secondLastTerm = 0;
+  let pos = -1;
   if (arg1 != undefined && arg2 == undefined) {
-    secondTerm = arg1;
+    lastTerm = arg1;
   }
-  if (arg1 != undefined && arg2 == undefined) {
-    firstTerm = arg1;
-    secondTerm = arg2;
+  if (arg1 != undefined && arg2 != undefined) {
+    secondLastTerm = arg1;
+    lastTerm = arg2;
   }
-  let fiboSeries = [firstTerm, secondTerm];
-  let index = 2;
-  output = makeCycler(fiboSeries);
+  let currentTerm = lastTerm + secondLastTerm;
+  let fiboSeries =[secondLastTerm, lastTerm];
   return function() {
-    fiboSeries[index] = fiboSeries[index-1] + fiboSeries[index-2];
-    index++;
-    return output();
+    fiboSeries.push(currentTerm);
+    secondLastTerm = lastTerm;
+    lastTerm = currentTerm;
+    currentTerm = lastTerm + secondLastTerm;
+    pos++;
+    return fiboSeries[pos];
   }
 }
 
