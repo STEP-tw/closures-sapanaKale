@@ -29,18 +29,41 @@ const makeDeltaTracker = function (delta1) {
   }
 }
 
-const makeFiboGenerator = undefined;
+const makeFiboGenerator = function (arg1, arg2) {
+  let firstTerm = 0;
+  let secondTerm = 1;
+  if (arg1 != undefined && arg2 == undefined) {
+    secondTerm = arg1;
+  }
+  if (arg1 != undefined && arg2 == undefined) {
+    firstTerm = arg1;
+    secondTerm = arg2;
+  }
+  let fiboSeries = [firstTerm, secondTerm];
+  let index = 2;
+  output = makeCycler(fiboSeries);
+  return function() {
+    fiboSeries[index] = fiboSeries[index-1] + fiboSeries[index-2];
+    index++;
+    return output();
+  }
+}
+
 
 const makeCycler = function (source) {
   let index = -1;
   const limit = source.length; 
+  let array = source;
+  let newArray = [];
   return function () {
     if (index < limit-1 ) {
       index++;
     } else {
       index = 0;
+      array = newArray;
     }
-    return constSource[index];
+    newArray.push(array[index]);
+    return array[index];
   }
 }
 
