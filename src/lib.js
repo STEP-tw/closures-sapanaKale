@@ -16,9 +16,33 @@ const makeCounterFromZero = function () {
     return count++;
   }
 }
-const makeDeltaTracker = undefined;
+const makeDeltaTracker = function (delta1) {
+  let deltaData = {"old":"","delta":0,"new":delta1};
+  return function (delta2) {
+    deltaData['old']= deltaData['new'];
+    if (!(delta2 == undefined)) {
+      deltaData['delta']= delta2;
+      deltaData['new']= deltaData['old'] + deltaData['delta'];;
+      delta2 = deltaData['old'];
+    }
+    return deltaData;
+  }
+}
+
 const makeFiboGenerator = undefined;
-const makeCycler = undefined;
+
+const makeCycler = function (source) {
+  let index = -1;
+  const limit = source.length; 
+  return function () {
+    if (index < limit-1 ) {
+      index++;
+    } else {
+      index = 0;
+    }
+    return constSource[index];
+  }
+}
 
 const curry = function (functionRef,arg) {
   return function (arg1,arg2) {
