@@ -11,7 +11,11 @@ const curry = function (functionRef,arg) {
   }
 }
 
-const compose = undefined;
+const compose = function (functionRef1, functionRef2) {
+  return function (arg1, arg2) {
+    return functionRef1(functionRef2(arg1,arg2));
+  }
+}
 
 exports.makeConstant=makeConstant;
 exports.makeCounterFromZero=makeCounterFromZero;
