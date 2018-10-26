@@ -35,6 +35,16 @@ const testCycleOnlyElementsGivenInitiallyEvenIfModifiedLater = function() {
   assert.equal("black",cycleColours());
 };
 
+const testCyclerCheckWhetherInputIsModified = function(){
+  let colours = ["blue","yellow"];
+  let cycleColours = makeCycler(colours);
+  assert.equal("blue",cycleColours());
+  assert.equal("yellow",cycleColours());
+  assert.equal("blue",cycleColours());
+  assert.equal("yellow",cycleColours());
+  assert.deepEqual(['blue','yellow'],colours);
+}
+
 const runTests = function() {
   if(!makeCycler) {
     console.log("Function 'makeCycler' in not implemented yet. Not running tests.");
@@ -52,6 +62,8 @@ const runTests = function() {
 
   testCycleOnlyElementsGivenInitiallyEvenIfModifiedLater();
   console.log("testCycleOnlyElementsGivenInitiallyEvenIfModifiedLater passed");
-};
 
+  testCyclerCheckWhetherInputIsModified();
+  console.log("tests passed");
+};
 runTests();

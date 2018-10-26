@@ -16,16 +16,19 @@ const makeCounterFromZero = function () {
     return count++;
   }
 }
+
 const makeDeltaTracker = function (delta1) {
-  let deltaData = {"old":"","delta":0,"new":delta1};
+  let oldDelta = "";
+  let currentDelta = 0;
+  let newDelta = delta1;
   return function (delta2) {
-    deltaData['old']= deltaData['new'];
+    oldDelta = newDelta;
     if (!(delta2 == undefined)) {
-      deltaData['delta']= delta2;
-      deltaData['new']= deltaData['old'] + deltaData['delta'];;
-      delta2 = deltaData['old'];
+      currentDelta = delta2;
+      newDelta = oldDelta + currentDelta;
+      delta2 = oldDelta;
     }
-    return deltaData;
+    return {'old':oldDelta, 'delta':currentDelta, 'new':newDelta};
   }
 }
 
@@ -51,7 +54,6 @@ const makeFiboGenerator = function (arg1, arg2) {
     return fiboSeries[pos];
   }
 }
-
 
 const makeCycler = function (source) {
   let index = -1;
